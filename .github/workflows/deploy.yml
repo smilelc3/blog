@@ -1,0 +1,87 @@
+
+# This is a basic workflow to help you get started with Actions
+
+name: deploy
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'markdown/**'
+      - 'deploy/**'
+  
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'markdown/**'
+      - 'deploy/**'
+
+  # 每周日0点构建
+  schedule:
+    - cron: "0 0 * * 0"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          lfs: 'true'
+      
+      # 部署 node.js
+      - uses: actions/setup-node@v4.0.0
+        with:
+          node-version: lts/*
+
+      # 将 pandoc 加入环境变量
+      - name: Setup pandoc      
+        uses: nikeee/setup-pandoc@master
+      
+      # 部署 SSH 认证
+      - name: Config SSH
+        env:
+          ACTION_DEPLOY_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}   
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval `ssh-agent`
+          ssh-add ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "smile@liuchang.men"
+          git config --global user.name "smilelc3"
+
+      # 构建和部署 hexo
+      - name: build and deploy hexo
+        run: |
+          npm install hexo-cli
+          export PATH="$PATH:./node_modules/.bin"
+          hexo init "blog"
+          cd blog
+          npm install
+          npm install hexo-theme-next
+          npm install hexo-deployer-git
+          npm uninstall hexo-renderer-marked
+          npm install hexo-renderer-pandoc
+          npm install hexo-symbols-count-time
+          npm install hexo-generator-searchdb
+          
+          cp ${{github.workspace}}/markdown/* ./source/_posts/
+          cp ${{github.workspace}}/deploy/CNAME ./source/
+          cp ${{github.workspace}}/deploy/_config.yml ./
+          cp ${{github.workspace}}/deploy/_config.next.yml ./
+
+          hexo clean
+          hexo deploy --generate
+          
