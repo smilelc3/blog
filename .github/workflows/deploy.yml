@@ -77,6 +77,7 @@ jobs:
           npm install hexo-symbols-count-time
           npm install hexo-generator-searchdb
           
+          rm ./source/_posts/* -rf
           cp ${{github.workspace}}/markdown/* ./source/_posts/
           cp ${{github.workspace}}/deploy/CNAME ./source/
           cp ${{github.workspace}}/deploy/_config.yml ./
