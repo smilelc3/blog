@@ -46,9 +46,13 @@ jobs:
         with:
           node-version: lts/*
 
-      # 将 pandoc 加入环境变量
+      # 部署 pandoc
       - name: Setup pandoc      
         uses: nikeee/setup-pandoc@master
+      
+      # 部署 yq
+      - name: Setup yq  
+        run: sudo snap install yq
       
       # 部署 SSH 认证
       - name: Config SSH
@@ -77,11 +81,12 @@ jobs:
           npm install hexo-symbols-count-time
           npm install hexo-generator-searchdb
           
-          rm ./source/_posts/* -rf
-          cp ${{github.workspace}}/markdown/* ./source/_posts/
+          # 定制化和复制博客
+          bash ${{github.workspace}}/deploy/_config.yml_modify.sh $(pwd)/_config.yml
+          cp ./node_modules/hexo-theme-next/_config.yml ./_config.next.yml && bash ${{github.workspace}}/deploy/_config.next.yml_modify.sh $(pwd)/_config.next.yml
+          rm ./source/_posts/* -rf && cp ${{github.workspace}}/markdown/* ./source/_posts/
           cp ${{github.workspace}}/deploy/CNAME ./source/
-          cp ${{github.workspace}}/deploy/_config.yml ./
-          cp ${{github.workspace}}/deploy/_config.next.yml ./
+   
 
           hexo clean
           hexo deploy --generate
