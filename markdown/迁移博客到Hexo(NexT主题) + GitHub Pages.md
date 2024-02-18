@@ -41,11 +41,11 @@ git --version
 
 ## 配置Git
 
-为了把本地的仓库中的内容传输到GitHub上，需要配置ssh key，无论是上传自己的博客还是上传其他的仓库都需要连接Github，ssh key是一个token，作用是身份验证。 
+为了把本地的仓库中的内容传输到GitHub上，需要配置ssh key，无论是上传自己的博客还是上传其他的仓库都需要连接Github，ssh key是一个token，作用是身份验证。
 为了在本地创建ssh key，打开Git Bash，输入命令：
 
 ```shell
-ssh-keygen -t rsa -C "email"		# email是我们在注册Github时使用的邮箱
+ssh-keygen -t rsa -C "email"  # email是我们在注册Github时使用的邮箱
 ```
 
 输入上面的命令后按Enter键，Git Bash会提示:
@@ -62,7 +62,7 @@ Enter file in which to save the key (/c/Users/sun/.ssh/id_rsa):_
 Enter passphrase <empty for no passphrase>:_
 ```
 
-这是在提示我们输入密码，直接回车表示不设置密码；此处我不设置密码，然后Git Bash要求我们重复密码，也直接回车，然后就会提示ssh key已经生成。 
+这是在提示我们输入密码，直接回车表示不设置密码；此处我不设置密码，然后Git Bash要求我们重复密码，也直接回车，然后就会提示ssh key已经生成。
 
 ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/迁移博客到Hexo(NexT主题)%20+%20GitHub%20Pages/微信截图_20190320203848.png)
 
@@ -117,9 +117,9 @@ node -v
 hexo项目须在电脑的磁盘里新建一个空文件夹，在我的电脑上是*C:\Users\smile\hexo_next*，用于存放本地仓库，和Github上的xxxxx.github.io是对应的，下面以命令行为例，完成Hexo安装
 
 ```shell
-mkdir C:\Users\smile\hexo_next			# 新建文件夹
+mkdir C:\Users\smile\hexo_next   # 新建文件夹
 cd C:\Users\smile\hexo_next
-npm install hexo -g						# 安装Hexo,-g代表全局安装
+npm install hexo -g      # 安装Hexo,-g代表全局安装
 ```
 
 安装耗时较长，最终可通过
@@ -136,9 +136,9 @@ hexo -v
 
 ```shell
 hexo init
-npm install 					# 安装Hexo所需要的组件
-hexo g							# 产生webapp文件
-hexo s							# 开启服务器
+npm install      # 安装Hexo所需要的组件
+hexo g       # 产生webapp文件
+hexo s       # 开启服务器
 ```
 
 此时控制台提示：
@@ -169,7 +169,7 @@ git clone https://github.com/theme-next/hexo-theme-next themes/next
 
 打开C:\Users\smile\hexo_next\\_config.yml
 
-**把theme: lansscape改为theme: next** 
+**把theme: lansscape改为theme: next**
 
 ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/迁移博客到Hexo(NexT主题)%20+%20GitHub%20Pages/批注%202019-03-20%20210223.png)
 
@@ -241,7 +241,7 @@ npm install hexo-generator-searchdb --save
 
 # 连接Hexo和Github Pages及部署博客
 
-接下来就是将Hexo与GitHub Pages连接起来 
+接下来就是将Hexo与GitHub Pages连接起来
 打开*C:\Users\smile\hexo_next\\_config.yml*文件，找到deploy字段，改为如下内容
 
 ```shell
@@ -264,7 +264,7 @@ npm install hexo-deployer-git --save
 使用命令：
 
 ```shell
-hexo clean & hexo d -g		# hexo g 生成webapp应用		# hexo d 部署
+hexo clean & hexo d -g  # hexo g 生成webapp应用  # hexo d 部署
 ```
 
 就可以发布到GitHub上啦！😉

@@ -35,15 +35,15 @@ sudo docker pull eugeneware/docker-wordpress-nginx
 
 ```bash
 # 创建容器
-sudo docker run -p 80:80 --name docker-wordpress-nginx -d eugeneware/docker-wordpress-nginx	
+sudo docker run -p 80:80 --name docker-wordpress-nginx -d eugeneware/docker-wordpress-nginx 
 # 启动容器
 docker start docker-wordpress-nginx
 ```
 
-##  容器开机自启动
+## 容器开机自启动
 
 ```shell
-docker run --restart=always  xxxx     		# 创建时参数
+docker run --restart=always  xxxx       # 创建时参数
 docker update --restart=always xxxx         # 若创建时未指定，可后期update
 ```
 

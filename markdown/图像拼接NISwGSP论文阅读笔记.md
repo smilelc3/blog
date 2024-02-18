@@ -30,6 +30,7 @@ date: 2020-04-18
 | (d) 带指定水平线的我们的成果 | ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/图像拼接NISwGSP论文阅读笔记/image-20200417134506426.png "图1(d)") |
 
 图1 18个图像的拼接。
+
 ## 2 相关工作
 
 Szeliski对图像拼接进行了全面的调研[^17]。图像拼接技术通常利用参数转换来全局或局部对齐图像。早期的方法使用全局参数扭曲，例如相似性，仿射和投影变换。有些人认为相机运动仅包含3D旋转。进行投影以将视球映射到图像平面以获得二维合成图像。一个著名的例子是Brown等人提出的AutoStitch方法[^1]。Gao等人提出了双重单应性变形，专门处理包含两个主导平面的场景[^5]。扭曲函数由具有空间变化权重的两个单应性矩阵的线性组合定义。由于它们的扭曲基于投影变换，因此生成的图像会受到投影失真（会拉伸和扩大区域）的影响。
@@ -90,11 +91,11 @@ $$
 $$
 \begin{align}
 {\rm S}^i_{jk}=
-	\begin{bmatrix} 
-	c(e^i_{jk})\ s(e^i_{jk}) \\ 
-	-s(e^i_{jk})\ c(e^i_{jk})
-	\end{bmatrix} \tag{3}
-\end{align} 
+    \begin{bmatrix}
+        c(e^i_{jk})\ s(e^i_{jk}) \\
+        -s(e^i_{jk})\ c(e^i_{jk})
+    \end{bmatrix} \tag{3}
+\end{align}
 $$
 
 系数$c(e^i_{jk})$和$s(e^i_{jk})$可以表示为顶点变量的线性组合。细节可见[^8]。
@@ -112,7 +113,7 @@ $$
 
 其中$\beta$和$\gamma$是控制该项权重的常数；$Q(e^i_j)$是共享边$e^i_j$的四边形集合（1或2个四边形，取决于边是否在网格的边界上）；${\rm M}^i$表示$I_i$的重叠区域中的四边形组；函数$d(q_k, {\rm M}^i)$返回四边形$q_k$到网格空间中重叠区域中的四边形的距离；$R_i$和$C_i$表示$I_i$的网格网格中的行数和列数。概括而言，边缘的权重与边缘到网格空间中重叠区域的归一化距离成比例。
 
-​	网格的最佳变形由以下因素确定：
+​ 网格的最佳变形由以下因素确定：
 
 $$
 {\rm \tilde{V}}=\arg\min_{\rm{\tilde{V}}}{\Psi_a}({\rm V})+\lambda_l\Psi_l({\rm V})+\Psi_g({\rm V}) \tag{6}
@@ -166,7 +167,7 @@ $$
 给定由MLDR估计的所有相对旋转角$\phi^{ij}$，我们可以找到一组旋转角$\{\theta_i\}$以尽可能地满足MLDR成对旋转关系。我们将$\theta_{i}$表示为单位2D矢量$(u_i,v_i)$并表示以下能量函数：
 
 $$
-{\rm E}_{MLDR}=\sum_{(i,j)\in {\rm J}}\Bigg\| 
+{\rm E}_{MLDR}=\sum_{(i,j)\in {\rm J}}\Bigg\|
 R(\phi^{ij})\begin{bmatrix} u_i \\ v_i\end{bmatrix} - \begin{bmatrix} u_j \\ v_j\end{bmatrix}
 \Bigg\|^2 \tag{10}
 $$
@@ -178,7 +179,7 @@ $$
 \begin{align}
 &{\rm E}_{MLDR}+\lambda_z{\rm E}_{ZERO}  \tag{11} \\
 &{\rm E}_{ZERO}=\sum_{i\in\Omega}\Bigg\|
-\begin{bmatrix} u_i \\ v_i \end{bmatrix} - 
+\begin{bmatrix} u_i \\ v_i \end{bmatrix} -
 \begin{bmatrix} 1 \\ 0 \end{bmatrix}
 \Bigg\|^2 \tag{12}
 \end{align}

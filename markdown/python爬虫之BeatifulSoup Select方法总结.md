@@ -4,6 +4,7 @@ date: 2018-03-26
 ---
 
 ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/python爬虫之BeatifulSoup%20Select方法总结/logo.jpg)
+
 # 简介
 
 > `BeautifulSoup`提供一些简单的、`python`式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序。
@@ -40,8 +41,8 @@ print(soup.select('#link1'))
 #### 组合查找
 
 ```python
-print(soup.select('p #link1'))    		#查找p标签中内容为id属性为link1的标签
-print(soup.select("head > title"))   	#直接查找子标签(绝对路径)
+print(soup.select('p #link1'))      #查找p标签中内容为id属性为link1的标签
+print(soup.select("head > title"))    #直接查找子标签(绝对路径)
 ```
 
 ------

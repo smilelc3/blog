@@ -56,8 +56,6 @@ atom若作为latex的开发环境，需要配合以下插件使用(直接在atom
 - `language-latex`
 - `pdf-view`
 
-
-
 另外建议安装`simplified-chinese-menu`插件，对atom菜单进行汉化。
 
 因对兼容性的设置，若对一般latex编写，建议Latex编译器使用xelatex，在`atom-latex`插件中设置如下：
@@ -106,4 +104,3 @@ windows环境下方案很多，这里推荐直接安装相同的Texlive套件，
 
 - Atom 配置见2.2，但注意：请从官网直接下载atom并安装，其余配置一致；
 - 因为不存在字体缺失问题，直接使用即可。
-

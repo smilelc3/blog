@@ -79,8 +79,6 @@ dst	= cv.GaussianBlur(src, ksize, sigmaX[, dst[, sigmaY[, borderType]]])
 
 ```
 
-
-
 * **src** - 输入图像
 * **dst** - 与输入图像尺寸一致的输出图像
 * **ksize** - 高斯核大小。可定制长宽，必须为正奇数，当为零是采用sigma计算
@@ -185,8 +183,6 @@ Z = - 1/(pi * sigma^4) * (1 - Z/(2*sigma^2) ) .* exp(-Z / ( 2 * sigma^2 ));
 figure, surf(X, Y, Z);
 ```
 
-
-
  LoG用来从金字塔低层图像重建上层未采样图像，在数字图像处理中也即是预测残差，可以对图像进行最大程度的还原，配合高斯金字塔一起使用。
 
 高斯金字塔用来向下降采样图像，而拉普拉斯金字塔则用来从金字塔底层图像中向上采样重建一个图像。
@@ -237,8 +233,6 @@ legend('LoG', 'DoG')
 line([0,0],[-0.35,0.06], 'Color','black', 'LineWidth', 0.5);
 line([-5,5],[0,0], 'Color','black', 'LineWidth', 0.5);
 ```
-
-
 
 上图是某层DoG与LoG的对比。
 
@@ -316,17 +310,17 @@ void SIFT::buildGaussianPyramid( const Mat& base, vector<Mat>& pyr, int nOctaves
 1. 高斯金字塔的组数$O=[log_2(min(m,n))]-3$；
 
 2. 关于计算计算高斯模糊的系数$\sigma$，有以下关系：
-   
+
    $$
    \sigma(o,s) = \sigma(o,0)\cdot2^{\frac{s}{S}}
    $$
-   
+
    且存在以下关系：
-   
+
    $$
    \sigma(o+1,0) = \sigma(o,S)
    $$
-   
+
    其中，$\sigma$为尺度空间坐标，$o$为组坐标，$s$为每组中的层座标，$\sigma(o,0)$为该组的初始尺度，$S$为每组层数（3~5）。可以得到：
 
    * 组内相邻图像尺度关系：$\sigma(o,s+1)=\sigma(o,s)\cdot2^\frac{1}{S}$
@@ -340,7 +334,6 @@ void SIFT::buildGaussianPyramid( const Mat& base, vector<Mat>& pyr, int nOctaves
       &=2\sigma(o,s)
      \end{align}
      $$
-     
 
    所以**相邻两组的同一层尺度大小为2倍关系**。
 
@@ -443,8 +436,6 @@ line([1,1],[0,5], 'Color','black', 'LineWidth', 1,  'LineStyle', '--');
 legend('f(x) = -3*x^2 + 2*x + 6');
 ```
 
-
-
 图中可见，连续空间和离散空间的极值点并不重合。我们需要先引进Taylor（泰勒）展开式：
 $$
 f(x)=\sum_{i=0}^{n} \frac{f^{(i)}(x_0)}{i!}(x-x_0)^i
@@ -453,7 +444,7 @@ $$
 $$
 \begin{align}
 f(x)& \approx f(0) + f'(0)x + \frac{f''(0)}{2}x^2 \\
-f(x)& \approx 6 + 2x -3x^2 
+f(x)& \approx 6 + 2x -3x^2
 \end{align}
 $$
 补充——**离散空间**的一阶导数和二阶导数的求法：
@@ -651,7 +642,7 @@ $$
 对图像$I(x,y)$在平移$(\Delta x,\Delta y)$后进行**一阶泰勒近似**：
 $$
 \begin{align}
-I(u+\Delta x,v+\Delta y) &= 
+I(u+\Delta x,v+\Delta y) &=
 I(u,v)+I_x(u,v)\Delta x+I_y(u,v)\Delta y+O(\Delta x^2,\Delta y^2)  \\
 &\approx I(u,v)+I_x(u,v)\Delta x+I_y(u,v)\Delta y \\
 \end{align}
@@ -689,9 +680,9 @@ $$
 
 椭圆函数特征值与图像中的**角点、直线（边缘）和平面**之间的关系如下图所示。共可分为三种情况：
 
-- **图像中的直线。** 一个特征值大，另一个特征值小，$\lambda_1\ll \lambda_2$或$\lambda_1\gg \lambda_2$。自相关函数值在某一方向上大，在其他方向上小。
-- **图像中的平面。** 两个特征值都小，且近似相等；自相关函数数值在各个方向上都小。
-- **图像中的角点。** 两个特征值都大，且近似相等，自相关函数在所有方向都增大。
+* **图像中的直线。** 一个特征值大，另一个特征值小，$\lambda_1\ll \lambda_2$或$\lambda_1\gg \lambda_2$。自相关函数值在某一方向上大，在其他方向上小。
+* **图像中的平面。** 两个特征值都小，且近似相等；自相关函数数值在各个方向上都小。
+* **图像中的角点。** 两个特征值都大，且近似相等，自相关函数在所有方向都增大。
 
 ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/SIFT算法深入理解/081646535629047.png)
 
@@ -776,12 +767,12 @@ OpenCV的Hairrs角点检测的函数为cornerHairrs()，但是它的输出是一
 void cornerHarris(InputArray src, OutputArray dst, int blockSize, int apertureSize, double k, int borderType = BORDER_DEFAULT);
 ```
 
-- **src** – 输入的单通道8-bit或浮点图像。
-- **dst** – 存储着Harris角点响应的图像矩阵，大小与输入图像大小相同，是一个浮点型矩阵。
-- **blockSize** – 邻域大小。
-- **apertureSize** – 扩展的微分算子大。
-- **k** – 响应公式中的参数$\alpha$ 。
-- **boderType** – 边界处理的类型。
+* **src** – 输入的单通道8-bit或浮点图像。
+* **dst** – 存储着Harris角点响应的图像矩阵，大小与输入图像大小相同，是一个浮点型矩阵。
+* **blockSize** – 邻域大小。
+* **apertureSize** – 扩展的微分算子大。
+* **k** – 响应公式中的参数$\alpha$ 。
+* **boderType** – 边界处理的类型。
 
 ### 删除边缘效应
 
@@ -934,8 +925,6 @@ static bool adjustLocalExtrema( const vector<Mat>& dog_pyr, KeyPoint& kpt, int o
 }
 ```
 
-
-
 ## 3. 方向赋值
 
 上面我们已经找到了关键点。为了实现图像旋转不变性，需要根据检测到的关键点局部图像结构为特征点方向赋值。我们使用图像的梯度直方图法求关键点局部结构的稳定方向。
@@ -967,6 +956,7 @@ $$
 通常离散的梯度直方图要进行插值拟合处理，以求取更精确的方向角度值。
 
 ### 关键点方向
+
 直方图峰值代表该关键点处邻域内图像梯度的主方向，也就是该关键点的主方向。在梯度方向直方图中，当存在另一个相当于主峰值$80\%$能量的峰值时，则将这个方向认为是该关键点的辅方向。
 
 所以一个关键点可能检测得到多个方向，这可以增强匹配的鲁棒性。Lowe的论文指出大概有$15\%$关键点具有多方向，但这些点对匹配的稳定性至为关键。

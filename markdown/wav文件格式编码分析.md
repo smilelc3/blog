@@ -12,12 +12,12 @@ wav格式文件所占容量$(B) = (取样频率 * 量化位数 * 声道数) * �
 
 为了方便查看具体的编码的细节，我们首先先介绍下Ubuntu下一款16进制的文本查看器**hexdump**，其相应参数说明如下：
 
-* **hexdump -C**      <== 规范的十六进制和ASCII码显示（Canonical hex+ASCII display ）
-* **hexdump -b**      <== 单字节八进制显示（One-byte octal display）
-* **hexdump -c**      <== 单字节字符显示（One-byte character display） 
-* **hexdump -d**      <== 双字节十进制显示（Two-byte decimal display） 
-* **hexdump -o**     <== 双字节八进制显示（Two-byte octal display）
-* **hexdump -x**       <== 双字节十六进制显示（Two-byte hexadecimal display） 
+* **hexdump -C**        <== 规范的十六进制和ASCII码显示（Canonical hex+ASCII display ）
+* **hexdump -b**        <== 单字节八进制显示（One-byte octal display）
+* **hexdump -c**        <== 单字节字符显示（One-byte character display）
+* **hexdump -d**        <== 双字节十进制显示（Two-byte decimal display）
+* **hexdump -o**        <== 双字节八进制显示（Two-byte octal display）
+* **hexdump -x**        <== 双字节十六进制显示（Two-byte hexadecimal display）
 
 比较来比较去，还是***hexdump -C***的显示效果更好些。
 

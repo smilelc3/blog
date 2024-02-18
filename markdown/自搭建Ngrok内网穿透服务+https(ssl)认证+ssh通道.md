@@ -97,8 +97,6 @@ GOOS=darwin GOARCH=amd64 make release-server
 GOOS=linux GOARCH=arm make release-server
 ```
 
-
-
 # 编译客户端ngrok
 
 按照平台需求，设置不同参数，与编译服务端一致。

@@ -76,9 +76,9 @@ Const.TEST = 'test'
 
 ```python
 from constClass import Const
-print(Const.TEST)				# 已有定义
-Const.AUTHOR = 'smile'			# 首次定义
-Const.AUTHOR = 'smilelc'		# 修改
+print(Const.TEST)    # 已有定义
+Const.AUTHOR = 'smile'   # 首次定义
+Const.AUTHOR = 'smilelc'  # 修改
 Const.author = 'smile'          # 小写定义
 del Const.AUTHOR                # 删除
 ```
@@ -87,4 +87,3 @@ del Const.AUTHOR                # 删除
 2. 上面的`Const.AUTHOR`定义后便不可再更改，因此`Const.AUTHOR = ‘smilelc’`会抛出`ConstBuiltError`异常；
 3. 而常量名称如果小写，如`Const.author ='smile'`，也会抛出`ConstCaseError`异常；
 4. 一旦定义完后，若删除，会抛出`ConstDelError`。
-

@@ -9,7 +9,6 @@ date: 2018-03-26
 
 **首先在命令行中输入三个命令：**
 
-
 ```bash
 sudo apt-get install mysql-server
 sudo apt install mysql-client
@@ -48,4 +47,4 @@ flush privileges;
 service mysql restart
 ```
 
-补充：在进入MySQL时，输入`mysql -uroot -p`命令时，会出现 > ERROR 1045 (28000): Access denied for user ‘root’@’localhost’这种情况。于是在网上查了许多技术网站，发现一篇不错的，据此解决。链接： https://blog.csdn.net/learner_lps/article/details/62887343
+补充：在进入MySQL时，输入`mysql -uroot -p`命令时，会出现 > ERROR 1045 (28000): Access denied for user ‘root’@’localhost’这种情况。于是在网上查了许多技术网站，发现一篇不错的，据此解决。链接： <https://blog.csdn.net/learner_lps/article/details/62887343>

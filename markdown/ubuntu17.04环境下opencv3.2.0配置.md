@@ -5,11 +5,11 @@ date: 2017-08-11
 
 ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/ubuntu17.04环境下opencv3.2.0配置\logo-1.jpg)
 
-# 实验环境：
+# 实验环境
 
-* CPU：Ryzen 1800x 
+* CPU：Ryzen 1800x
 * 系统：ubuntu 17.04 64bit
-* 软件环境：python2.7 + python3.5 + cuda开发环境（cuda8.0 cuddn 5.1） 
+* 软件环境：python2.7 + python3.5 + cuda开发环境（cuda8.0 cuddn 5.1）
 
 因实验要求，需要对图片进行灰度编码，自然而然想到利用openCV库结合python进行，但由于系统较新，且网上教程多为老版本，新教程也有些小错误，特记下配置过程
 
@@ -141,12 +141,8 @@ sudo make install
    import cv2
    ```
 
-
 我们也可以通过安装预编译的第三方所提供的openCV
 
 ```shell
 pip install opencv-python opencv-contrib-python
 ```
-
-
-

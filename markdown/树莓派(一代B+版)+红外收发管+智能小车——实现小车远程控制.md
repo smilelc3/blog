@@ -28,7 +28,7 @@ date: 2017-07-01
 USB Image Tool可以直读.zip压缩包。网上下载的zip格式系统镜像，下完直接可以烧录。
 点击**Restore**，选择.zip文件即可。注意打开对话框中默认看不到.zip文件，在“文件类型”处选择“**All Files (*.*)**”即可。
 
-##  SSH无法连接问题
+## SSH无法连接问题
 
 自从2016年11月开始，树莓派官方推荐 [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) 系统镜像关闭了默认*ssh*连接，重新开启也很简单，把SD卡拔下来，进入到根目录，新建一个名为*ssh*的空白文件(无后缀)就可以。
 
@@ -51,7 +51,7 @@ USB Image Tool可以直读.zip压缩包。网上下载的zip格式系统镜像�
 
 ## 硬件连接
 
-**红外接收器** 
+**红外接收器**
 
 * vcc 连 pin1 (3.3v)
 
@@ -166,7 +166,7 @@ MODULES="lirc_rpi"
 sudo /etc/init.d/lirc restart
 ```
 
-**注意：**配置gpio_in_pin和gpio_out_pin时，编号为GPIO号，并非pin号 
+**注意：**配置gpio_in_pin和gpio_out_pin时，编号为GPIO号，并非pin号
 
 **启动测试**
 

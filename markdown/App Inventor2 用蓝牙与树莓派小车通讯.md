@@ -87,6 +87,7 @@ xgcom
 # 展示与控制代码
 
 <video src="https://raw.githubusercontent.com/smilelc3/blog/main/images/App Inventor2 用蓝牙与树莓派小车通讯/蓝牙控制样例.mp4" controls preload="metadata"></video>
+
 ```python
 import serial
 import time
@@ -159,4 +160,3 @@ while True:
         time.sleep(0.02)
     time.sleep(0.02)
 ```
-

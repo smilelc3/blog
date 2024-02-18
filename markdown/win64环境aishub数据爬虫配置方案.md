@@ -21,11 +21,11 @@ date: 2017-05-25
 - config文件内容：
 
 > 数据库文件目录：
->         dbpath=C:/mongoDB3.4.4/data
+> dbpath=C:/mongoDB3.4.4/data
 
 > 日志目录：
->         logpath=C:/mongoDB3.4.4/log/mongo.log
->         diaglog=3
+> logpath=C:/mongoDB3.4.4/log/mongo.log
+> diaglog=3
 
 - 安装服务至系统服务
 
@@ -33,7 +33,7 @@ date: 2017-05-25
 mongod –config C:\mongoDB3.4.4\bin\mongodb.config –install
 ```
 
-- 启动与关闭mongoDB：       
+- 启动与关闭mongoDB：
 
 ```Bash
 net start MongoDB
@@ -82,7 +82,7 @@ use aishubdb.sheet1.drop()
 pip install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
-#### Pip更新 
+#### Pip更新
 
 ```Bash
 python -m pip install –upgrade pip 
@@ -90,7 +90,7 @@ python -m pip install –upgrade pip
 
 #### 依赖包
 
-- beautifulsoup4 
-- requests 
-- pymongo 
+- beautifulsoup4
+- requests
+- pymongo
 - lxml

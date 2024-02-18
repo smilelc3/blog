@@ -156,7 +156,7 @@ youtube-dl [OPTIONS] URL [URL...]
 --hls-prefer-ffmpeg				使用ffmpeg代替原生HLS进行下载
 --hls-use-mpegts				使用mpegts容器获取HLS视频，允许在下载时播放视频（某些播放器可能无法播放）
 --external-downloader COMMAND	使用指定的外部下载程序。目前支持aria2c，avconv，axel，curl，ffmpeg，httpie，wget
---external-downloader-args ARGS  为外部下载器指定参数
+--external-downloader-args ARGS 为外部下载器指定参数
 ```
 
 ## 文件系统选项:
@@ -402,4 +402,3 @@ youtube-dl [OPTIONS] URL [URL...]
 --convert-subs FORMAT            Convert the subtitles to other format
                                  (currently supported: srt|ass|vtt|lrc)
 ```
-

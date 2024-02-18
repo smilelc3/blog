@@ -7,9 +7,9 @@ date: 2020-02-24
 
 1. 下载vagrant和virtualbox，并安装
 
-- vagrant:https://www.vagrantup.com/
+- vagrant:<https://www.vagrantup.com/>
 
-- virtualbox:https://www.virtualbox.org/
+- virtualbox:<https://www.virtualbox.org/>
 
   注意：vagrant2.2.7发布，本次更新主要**添加了对virtualbox6.1.x版本的支持。**
 
@@ -32,52 +32,52 @@ date: 2020-02-24
    vagrant box add ubuntu/xenial64
    ```
 
-   也可以使用其他镜像，镜像地址：https://app.vagrantup.com/boxes/search
+   也可以使用其他镜像，镜像地址：<https://app.vagrantup.com/boxes/search>
 
 3. 创建hadoopProject文件夹（可自定），并创建两个文件`Vagrantfile`和`init.sh`
 
    ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/使用vagrant搭建hadoop+spark环境/image-20200223164926490.png)
 
-   * VagrantFile是vagrant的**启动配置文件**， 
-   * init.sh是**初始环境的安装脚本**
+   - VagrantFile是vagrant的**启动配置文件**，
+   - init.sh是**初始环境的安装脚本**
 
 4. 编辑VagrantFile文件， 内容如下:
 
-   ```ruby
-   Vagrant.configure("2") do |config|
-       config.vm.define :master1, primary: true do |master|
-           master.vm.provider "virtualbox" do |v|
-               v.customize ["modifyvm", :id, "--name", "hadoop-master1", "--memory", "1024"]
-   		end
-   		master.vm.box = "ubuntu/xenial64"
-   		master.vm.hostname = "hadoop-master1"
-   		master.vm.network :private_network, ip: "192.168.10.10"
-   		master.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh", disabled: "true"
-   		master.vm.network "forwarded_port", guest: 22, host: 2220
-       end
-   
-      (1..2).each do |i|
-       config.vm.define "slave#{i}" do |node|
-           node.vm.box = "ubuntu/xenial64"
-           node.vm.hostname = "hadoop-slave#{i}"
-           node.vm.network :private_network, ip: "192.168.10.1#{i}"
-   		node.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh", disabled: "true"
-   		node.vm.network "forwarded_port", guest: 22, host: "222#{i}"
-           node.vm.provider "virtualbox" do |vb|
-             vb.memory = "512"
-           end
-        end
+```ruby
+Vagrant.configure("2") do |config|
+   config.vm.define :master1, primary: true do |master|
+      master.vm.provider "virtualbox" do |v|
+         v.customize ["modifyvm", :id, "--name", "hadoop-master1", "--memory", "1024"]
       end
-   
-     #manage hosts file 
-     config.hostmanager.enabled = true
-     config.hostmanager.manage_host = true
-     config.hostmanager.manage_guest = true
-   
-      #provision
-      config.vm.provision "shell", path: "init.sh", privileged: false
+      master.vm.box = "ubuntu/xenial64"
+      master.vm.hostname = "hadoop-master1"
+      master.vm.network :private_network, ip: "192.168.10.10"
+      master.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh", disabled: "true"
+      master.vm.network "forwarded_port", guest: 22, host: 2220
    end
-   ```
+
+   (1..2).each do |i|
+      config.vm.define "slave#{i}" do |node|
+         node.vm.box = "ubuntu/xenial64"
+         node.vm.hostname = "hadoop-slave#{i}"
+         node.vm.network :private_network, ip: "192.168.10.1#{i}"
+         node.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh", disabled: "true"
+         node.vm.network "forwarded_port", guest: 22, host: "222#{i}"
+         node.vm.provider "virtualbox" do |vb|
+            vb.memory = "512"
+         end
+      end
+   end
+
+   #manage hosts file 
+   config.hostmanager.enabled = true
+   config.hostmanager.manage_host = true
+   config.hostmanager.manage_guest = true
+
+   #provision
+   config.vm.provision "shell", path: "init.sh", privileged: false
+end
+```
 
    从代码可以看到， 我们一共创建了3个虚拟机环境 ，分别是master1, slave1, slave2。并分配好IP地址和内存空间。
 
@@ -110,7 +110,7 @@ date: 2020-02-24
    ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/使用vagrant搭建hadoop+spark环境/image-20200223171242368.png)
    **注意：此时默认用户名和密码都是`vagrant`**
 
-   此时，主机仅允许公钥私钥配对SSH链接，建议打开密码认证访问，编辑文件` /etc/ssh/sshd_config`，修改如下配置为yes：
+   此时，主机仅允许公钥私钥配对SSH链接，建议打开密码认证访问，编辑文件`/etc/ssh/sshd_config`，修改如下配置为yes：
 
    ```
    PasswordAuthentication yes
@@ -122,20 +122,16 @@ date: 2020-02-24
    sudo service ssh restart
    ```
 
-   
-
    6. 编写provision文件
        前面安装vagrant的时候说到，provision的作用是帮助我们进行主机环境的初始化工作，现在我们来编写`init.sh`，具体内容根据实际情况进行删减。在provision里，我只是安装了linux环境必需的一些组件。
 
-   
-
    ```shell
    sudo apt update         # 更新apt
-   sudo apt install openssh-server		# 安装SSH
+   sudo apt install openssh-server  # 安装SSH
    sudo apt install openjdk-8-jdk     # 安装JAVA
    ```
 
-   * 即使因为网络问题导致安装不成功，也可以手动逐个安装。
+   - 即使因为网络问题导致安装不成功，也可以手动逐个安装。
 
    编写完后，运行命令进行生效
 
@@ -143,16 +139,14 @@ date: 2020-02-24
    vagrant provision
    ```
 
-
-
 ## 3. 配置Hadoop
 
 现在我们有三台机器:
 
-```
-hadoop-master1		192.168.10.10
-hadoop-slave1		192.168.10.11
-hadoop-slave2		192.168.10.12
+```text
+hadoop-master1  192.168.10.10
+hadoop-slave1  192.168.10.11
+hadoop-slave2  192.168.10.12
 ```
 
 Hadoop 集群配置过程:
@@ -180,7 +174,7 @@ sudo adduser hadoop sudo    # 增加hadoop管理员权限
 
 ```shell
 sudo apt update         # 更新apt
-sudo apt install openssh-server		# 安装SSH
+sudo apt install openssh-server  # 安装SSH
 sudo apt install openjdk-8-jdk     # 安装JAVA
 ```
 
@@ -265,15 +259,15 @@ hadoop-slave2
 
 ```xml
 <configuration>
-	<property>
-		<name>hadoop.tmp.dir</name>
-		<value>/usr/local/hadoop/tmp</value>
-		<description>Abase for other temporary directories.</description>
-	</property>
-	<property>
-		<name>fs.defaultFS</name>
-		<value>hdfs://hadoop-master1:9000</value>
-	</property>
+   <property>
+      <name>hadoop.tmp.dir</name>
+      <value>/usr/local/hadoop/tmp</value>
+      <description>Abase for other temporary directories.</description>
+   </property>
+   <property>
+      <name>fs.defaultFS</name>
+      <value>hdfs://hadoop-master1:9000</value>
+   </property>
 </configuration>
 ```
 
@@ -281,10 +275,10 @@ hadoop-slave2
 
 ```xml
 <configuration>
-	<property>
-		<name>dfs.replication</name>
-		<value>3</value>
-	</property>
+   <property>
+      <name>dfs.replication</name>
+      <value>3</value>
+   </property>
 </configuration>
 ```
 
@@ -296,10 +290,10 @@ cp mapred-site.xml.template  mapred-site.xml
 
 ```xml
 <configuration>
-	<property>
-		<name>mapreduce.framework.name</name>
-		<value>yarn</value>
-	</property>
+   <property>
+      <name>mapreduce.framework.name</name>
+      <value>yarn</value>
+   </property>
 </configuration>
 ```
 
@@ -307,15 +301,15 @@ cp mapred-site.xml.template  mapred-site.xml
 
 ```xml
 <configuration>
-	<!-- Site specific YARN configuration properties -->
-	<property>
-		<name>yarn.nodemanager.aux-services</name>
-		<value>mapreduce_shuffle</value>
-	</property>
-	<property>
-		<name>yarn.resourcemanager.hostname</name>
-		<value>hadoop-master1</value>
-	</property>
+   <!-- Site specific YARN configuration properties -->
+   <property>
+      <name>yarn.nodemanager.aux-services</name>
+      <value>mapreduce_shuffle</value>
+   </property>
+   <property>
+      <name>yarn.resourcemanager.hostname</name>
+      <value>hadoop-master1</value>
+   </property>
 </configuration>
 ```
 
@@ -325,7 +319,7 @@ cp mapred-site.xml.template  mapred-site.xml
 cd /usr/local/
 rm -rf /usr/local/hadoop/tmp   # 删除临时文件
 rm -rf /usr/local/hadoop/logs/*   # 删除日志文件
-tar -zcf ~/hadoop.master.tar.gz ./hadoop			# 打包hadoop
+tar -zcf ~/hadoop.master.tar.gz ./hadoop   # 打包hadoop
 cd ~
 scp ./hadoop.master.tar.gz hadoop-slave1:/home/hadoop
 scp ./hadoop.master.tar.gz hadoop-slave2:/home/hadoop
@@ -415,7 +409,7 @@ hadoop-slave1
 hadoop-slave2
 ```
 
-* 配置spark-env.sh文件
+- 配置spark-env.sh文件
 
 ```shell
 cp ./conf/spark-env.sh.template ./conf/spark-env.sh
@@ -485,7 +479,7 @@ sudo chown -R hadoop /usr/local/spark
 
 **在浏览器上查看Spark独立集群管理器的集群信息**
 
-spark集群端口：8080 
+spark集群端口：8080
 
 spark-job监控端口：4040
 
@@ -493,7 +487,7 @@ namenode管理端口：50070
 
 yarn端口：8088  
 
-在master主机上打开浏览器，访问http://hadoop-master1:8080/，如下图：
+在master主机上打开浏览器，访问<http://hadoop-master1:8080/，如下图：>
 
 ![](https://raw.githubusercontent.com/smilelc3/blog/main/images/使用vagrant搭建hadoop+spark环境/image-20200223232355607.png)
 

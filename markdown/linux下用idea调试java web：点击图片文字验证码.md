@@ -233,7 +233,7 @@ public class Login extends HttpServlet {
 
 **index.jsp：前端界面**
 
-```xml
+```html
 <html lang = "zh-CN">
     <head>
         <meta charset="UTF-8">

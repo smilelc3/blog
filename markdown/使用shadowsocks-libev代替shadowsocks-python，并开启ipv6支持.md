@@ -51,7 +51,7 @@ sudo nano /etc/shadowsocks-libev/config.json
 `"server"`中：使用`["[::0]", "0.0.0.0"]`分别监听ipv6、ipv4所有请求
 `"password"`中：修改为所想设置的密码
 
-- 注意：以前在`shadowsock-python`有使用`"server":"::"`会默认监听ipv4、ipv6，但是该设置在`shadowsocks-libev`不生效，仅仅监听ipv6
+* 注意：以前在`shadowsock-python`有使用`"server":"::"`会默认监听ipv4、ipv6，但是该设置在`shadowsocks-libev`不生效，仅仅监听ipv6
 
 # 控制shadowsocks
 
