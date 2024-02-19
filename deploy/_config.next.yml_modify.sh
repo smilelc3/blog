@@ -17,6 +17,8 @@ yq --inplace $'
 
   .footer.powered = false |
 
+  .codeblock.highlight_theme = "night" |
+
   .reading_progress.enable = true |
 
   .github_banner.enable = true |
