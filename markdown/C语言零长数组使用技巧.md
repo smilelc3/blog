@@ -55,11 +55,11 @@ const SENSOR_RSP_S *rsp = get_sensor_data();
 size_t rsp_len = get_sensor_data_length();
 
 // 判断长度合法性，直接使用sizeof(SENSOR_RSP_S)
-if (rsp_len != sizeof(SENSOR_RSP_S) + rsp->sensor_num * single_info_size) {
+if (rsp_len != sizeof(SENSOR_RSP_S) + rsp->sensor_num * rsp->single_info_size) {
     ...
 }
 
-// 遍历访问数据,数据描述和数据内容均来自rsp，阅读清晰
+// 遍历访问数据，数据描述和数据内容均来自rsp，理解清晰
 for (size_t i = 0; i < rsp->sensor_num; i++) {
     show_sensor(rsp->info[i]);
 }
