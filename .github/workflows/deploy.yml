@@ -87,6 +87,7 @@ jobs:
           cp ./node_modules/hexo-theme-next/_config.yml ./_config.next.yml && bash ${{github.workspace}}/deploy/_config.next.yml_modify.sh $(pwd)/_config.next.yml
           rm ./source/_posts/* -rf && cp ${{github.workspace}}/markdown/* ./source/_posts/
           cp ${{github.workspace}}/deploy/CNAME ./source/
+          mkdir ./source/js && cp ${{github.workspace}}/js/* ./source/js/
    
 
           hexo clean
