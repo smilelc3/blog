@@ -66,17 +66,33 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.email "smile@liuchang.men"
           git config --global user.name "smilelc3"
-
+      
+      # 部署 Go
+      - name: Setup Go 
+        uses: actions/setup-go@v5
+      
       # 部署 wasm 
       - name: Setup wasm
         run: |
           mkdir cd ${{github.workspace}}/js && cd ${{github.workspace}}/js/
+          
           git clone --depth=1 https://github.com/smilelc3/MyLittleTool.git
           sudo apt install emscripten -y
-          emcc MyLittleTool/Hex2Ascii.cpp MyLittleTool/Ascii2Hex.cpp MyLittleTool/Linear11Trans.cpp MyLittleTool/checksum_byteacc.cpp -D WASM_EMCC -o MyLittleTool.js -O3 -flto -s WASM=1 -s EXPORTED_FUNCTIONS='["_malloc", "_free"]' -s "EXPORTED_RUNTIME_METHODS=['cwrap']" -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=1
-          rm -rf MyLittleTool
-          cd -
-    
+          cd MyLittleTool
+          emcc Hex2Ascii.cpp Ascii2Hex.cpp Linear11Trans.cpp checksum_byteacc.cpp -D WASM_EMCC -o MyLittleTool.js -O3 -flto -s WASM=1 -s EXPORTED_FUNCTIONS='["_malloc", "_free"]' -s "EXPORTED_RUNTIME_METHODS=['cwrap']" -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=1
+          cd ..
+          mv MyLittleTool/MyLittleTool.js . && mv MyLittleTool/MyLittleTool.wasm .
+          rm -r MyLittleTool
+          
+          git clone --depth=1 https://github.com/smilelc3/sudoku-solver.git
+          cd sudoku-solver
+          GOOS=js GOARCH=wasm go build -o sudoku.wasm wasm_main.go
+          cd ..
+          cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" . && mv sudoku-solver/sudoku.wasm .
+          rm -r sudoku-solver
+          
+          
+              
       # 构建和部署 hexo
       - name: build and deploy hexo
         run: |
