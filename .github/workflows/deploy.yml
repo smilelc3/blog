@@ -86,7 +86,7 @@ jobs:
           
           git clone --depth=1 https://github.com/smilelc3/sudoku-solver.git
           cd sudoku-solver
-          GOOS=js GOARCH=wasm go build -o sudoku.wasm wasm_main.go
+          GOOS=js GOARCH=wasm go build -o sudoku.wasm -ldflags="-s -w" wasm_main.go
           cd ..
           cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" . && mv sudoku-solver/sudoku.wasm .
           rm -r sudoku-solver
