@@ -79,7 +79,7 @@ jobs:
           git clone --depth=1 https://github.com/smilelc3/MyLittleTool.git
           sudo apt install emscripten -y
           cd MyLittleTool
-          emcc Hex2Ascii.cpp Ascii2Hex.cpp Linear11Trans.cpp Linear16Trans.cpp checksum_byteacc.cpp -D WASM_EMCC -o MyLittleTool.js -O3 -flto -s WASM=1 -s EXPORTED_FUNCTIONS='["_malloc", "_free"]' -s "EXPORTED_RUNTIME_METHODS=['cwrap']" -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=1
+          emcc Hex2Ascii.cpp Ascii2Hex.cpp Linear11Trans.cpp Linear16Trans.cpp checksum_byteacc.cpp DateTimeCalc.cpp -D WASM_EMCC -o MyLittleTool.js -O3 -flto -s WASM=1 -s EXPORTED_FUNCTIONS='["_malloc", "_free"]' -s "EXPORTED_RUNTIME_METHODS=['cwrap']" -s ALLOW_MEMORY_GROWTH -s ASSERTIONS=1
           cd ..
           mv MyLittleTool/MyLittleTool.js . && mv MyLittleTool/MyLittleTool.wasm .
           rm -r MyLittleTool
