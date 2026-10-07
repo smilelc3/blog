@@ -1,9 +1,9 @@
 ---
-title: LicheePi Zero: 32M norlfash + 主线 U-Boot + 主线 Linux + Alpine roots + LVGL 监控屏
+title: LicheePi Zero：32M norlfash + 主线 U-Boot + 主线 Linux + Alpine roots + LVGL 监控屏
 date: 2026-10-07
 ---
 
-## LicheePi Zero: 32M norlfash + 主线 U-Boot + 主线 Linux + Alpine roots + LVGL 监控屏 
+## LicheePi Zero：32M norlfash + 主线 U-Boot + 主线 Linux + Alpine roots + LVGL 监控屏 
 
 一台带4.3 寸小屏幕的国产linux 小开发板，从"原厂 BSP 镜像"改成全部上游代码：**主线 U-Boot、主线 Linux、**
 **、Alpine rootfs，都存储在32M 的 spi norflash上**，顺手开机自启显示一块中文的 LVGL 系统监控面板。
