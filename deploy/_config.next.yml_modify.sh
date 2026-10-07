@@ -40,5 +40,7 @@ yq --inplace $'
 
   .local_search.enable = true |
   .local_search.unescape = true |
-  .local_search.preload = true
+  .local_search.preload = true |
+
+  .mermaid.enable = true
 ' $config_path

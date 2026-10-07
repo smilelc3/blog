@@ -107,6 +107,7 @@ jobs:
           npm install hexo-renderer-pandoc
           npm install hexo-symbols-count-time
           npm install hexo-generator-searchdb
+          npm install hexo-filter-mermaid-diagrams
           
           # 定制化和复制博客
           bash ${{github.workspace}}/deploy/_config.yml_modify.sh $(pwd)/_config.yml
