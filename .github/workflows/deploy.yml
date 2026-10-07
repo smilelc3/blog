@@ -38,12 +38,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           lfs: 'true'
       
       # 部署 node.js
-      - uses: actions/setup-node@v4.0.0
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
 
@@ -69,7 +69,7 @@ jobs:
       
       # 部署 Go
       - name: Setup Go 
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v7
       
       # 部署 wasm 
       - name: Setup wasm
