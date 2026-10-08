@@ -346,7 +346,7 @@ void SIFT::buildGaussianPyramid( const Mat& base, vector<Mat>& pyr, int nOctaves
    \sigma(o,s)=2^{o-1}k^{(s-1)}\sigma,\ k=2^{\frac{1}{S}}
    $$
 
-3. $$
+$$
    \begin{align}
    \bar\sigma_i&=\sqrt{k^{(i-1)}\sigma*k*k^{(i-1)}\sigma*k-k^{(i-1)}\sigma*k^{(i-1)}\sigma} \\
    (\bar\sigma_i)^2&=k^{2(i-1)}\sigma^2(k^2-1) \\
@@ -650,14 +650,14 @@ $$
 其中，$I_x$、$I_y$是图像$I(x,y)$的偏导数，这样的话，自相关函数则可以简化为（暂时省略$w(u,v)$，不影响结算结果）：
 $$
 \begin{align}
-c(x,y;\Delta x, \Delta y) & \approx \sum_\limits{w}(I_x(x,y)\Delta x + I_y(x,y)\Delta y)^2 \\
+c(x,y;\Delta x, \Delta y) & \approx \sum\limits_{w}(I_x(x,y)\Delta x + I_y(x,y)\Delta y)^2 \\
 &= \begin{bmatrix} \Delta x & \Delta y\end{bmatrix}M(x,y) \begin{bmatrix} \Delta x\\ \Delta y\end{bmatrix}
 \end{align}
 $$
 其中
 $$
 \begin{align}
-M(x,y) &= \sum_\limits{w} \begin{bmatrix} I_x(x,y)^2  & I_x(x,y)I_y(x,y) \\ I_x(x,y)I_y(x,y) & I_y(x,y)^2\end{bmatrix} \\
+M(x,y) &= \sum\limits_{w} \begin{bmatrix} I_x(x,y)^2  & I_x(x,y)I_y(x,y) \\ I_x(x,y)I_y(x,y) & I_y(x,y)^2\end{bmatrix} \\
 &=\begin{bmatrix} \sum_w I_x(x,y)^2  & \sum_w I_x(x,y)I_y(x,y) \\ \sum_w I_x(x,y)I_y(x,y) & \sum_w I_y(x,y)^2\end{bmatrix} \\
 &=\begin{bmatrix} A & B \\ B & C\end{bmatrix}
 \end{align}
@@ -668,7 +668,7 @@ c(x,y; \Delta x, \Delta y) \approx A\Delta x^2 + 2B\Delta x \Delta y+C\Delta y^2
 $$
 其中
 $$
-A=\sum_\limits{w}I_x^2,\quad B=\sum_\limits{w}I_xI_y,\quad C=\sum_\limits{w}I_y^2
+A=\sum\limits_{w}I_x^2,\quad B=\sum\limits_{w}I_xI_y,\quad C=\sum\limits_{w}I_y^2
 $$
 二次项函数本质上就是一个椭圆函数。如下图所示，椭圆一般方程为：
 $$
@@ -737,7 +737,7 @@ $$
 
 假设已经得到了矩阵$M$的特征值$\lambda_1 \geq \lambda_2\geq 0$,令$\lambda_2=k \lambda_1,0 \leq k \leq 1$。由特征值与矩阵$M$的迹和行列式的关系可得：
 $$
-detM=\prod_\limits{i}\lambda_i,\quad traceM=\sum_\limits{i}\lambda_i
+detM=\prod\limits_{i}\lambda_i,\quad traceM=\sum\limits_{i}\lambda_i
 $$
 可以得到角点的响应$R$:
 $$
