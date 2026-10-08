@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 config_path=$1
 
 yq --inplace $'
@@ -17,6 +19,9 @@ yq --inplace $'
   .index_generator.per_page = 4 |
   
   .theme = "next" |
+
+  .markdown.plugins = ["markdown-it-footnote"] |
+  .markdown.disable_rules = ["emphasis", "strikethrough"] |
 
   .deploy.type = "git" |
   .deploy.repo = "git@github.com:smilelc3/smilelc3.github.io.git" |

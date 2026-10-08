@@ -1,0 +1,12 @@
+{
+  "name": "hexo-mermaid-diagram",
+  "version": "1.0.0",
+  "description": "把标准 ```mermaid 围栏转成 NexT 主题自带加载器可直接渲染的 HTML 结构",
+  "main": "index.js",
+  "keywords": ["hexo", "mermaid", "next"],
+  "license": "MIT",
+  "private": true,
+  "peerDependencies": {
+    "hexo": ">=4.0.0"
+  }
+}

@@ -26,7 +26,7 @@ yq --inplace $'
 
   .math.every_page = true |
   .math.mathjax.enable = true |
-  .math.mathjax.tags = "ams"  |
+  .math.mathjax.tags = "ams" |
 
   .fancybox = true |
 
