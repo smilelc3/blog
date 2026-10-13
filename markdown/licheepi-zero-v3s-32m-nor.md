@@ -125,7 +125,7 @@ flowchart TD
 |---|---|
 | **烧录工具** | 给上游 `sunxi-fel` 打补丁：`spiflash-read/write/erase` 遇到 `> 16 MiB` 的偏移时改用 4 字节命令，**不发 EN4B** |
 | **U-Boot** | 给 `spi-nor-ids.c` 里 `mx25l25635e`（JEDEC ID `0xc22019`）那条加上 `SPI_NOR_4B_OPCODES` 标志（`drivers/mtd/spi/sf_internal.h` 里的 info flag），并关掉 `CONFIG_SPI_FLASH_BAR`；这样探测到容量 > 16 MiB 时 `spi_nor` 会调 `spi_nor_set_4byte_opcodes()` |
-| **Linux** | 内核 `macronix.c` 里给同一个 ID 条目加 `.fixup_flags = SPI_NOR_4B_OPCODES`（**保险性质的**，原因见下） |
+| **Linux** | 内核 `macronix.c` 里给同一个 ID 条目加 `.fixup_flags = SPI_NOR_4B_OPCODES`（**保险性质**） |
 
 ---
 
@@ -193,10 +193,6 @@ flowchart LR
 全部设成 disabled**（`board/patches/lvgl-drm-hide-other-planes.patch`），
 服务启动前再把 fbcon 从 tty1 解绑。之后 `drm state` 里就只剩 LVGL 一块 plane，
 屏幕和导出的帧完全一致。
-
-> **截图小技巧**：DRM 直出时画面不在 `/dev/fb0`。程序收到 `SIGUSR1` 会把当前正在扫描输出的那块
-> dumb buffer 导成 PPM，`./demo/run-on-board.sh --shot x.png` 负责发信号、scp 回来、转 PNG。
-> 本文所有界面图都是这么来的——**是屏幕上的真画面，不是模拟渲染**。
 
 ---
 
