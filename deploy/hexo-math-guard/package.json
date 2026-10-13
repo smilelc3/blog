@@ -1,0 +1,13 @@
+{
+  "name": "hexo-math-guard",
+  "version": "1.0.0",
+  "description": "保护 $…$ / $$…$$ 数学区间，使其中的 _ 不被 markdown 的 emphasis 规则破坏（供前端 MathJax 使用）",
+  "main": "index.js",
+  "keywords": ["hexo", "mathjax", "katex", "markdown-it"],
+  "license": "MIT",
+  "private": true,
+  "files": ["index.js", "lib"],
+  "peerDependencies": {
+    "hexo": ">=4.0.0"
+  }
+}

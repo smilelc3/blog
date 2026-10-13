@@ -104,11 +104,7 @@ jobs:
           npm install hexo-symbols-count-time
           npm install hexo-generator-searchdb
 
-          # mermaid 支持：本仓库自带的 hexo-mermaid-diagram 插件（替代输出结构不兼容的
-          # hexo-filter-mermaid-diagrams）。它输出 <pre><code class="mermaid">，
-          # 正好命中 NexT 自带加载器的选择器 —— 因此不需要任何自定义前端 JS，
-          # 也不修改任何第三方插件或主题文件。
-          npm install ${{github.workspace}}/deploy/hexo-mermaid-diagram
+          npm install ${{github.workspace}}/deploy/hexo-math-guard
 
           # 定制化和复制博客
           bash ${{github.workspace}}/deploy/_config.yml_modify.sh $(pwd)/_config.yml

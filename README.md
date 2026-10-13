@@ -14,13 +14,13 @@
 | --- | --- |
 | `markdown/` | 博客正文（唯一需要日常编辑的地方） |
 | `images/` | 图片等多媒体资源，兼作图床 |
-| `deploy/` | hexo 定制化：两个 `yq` 配置脚本 + 自带的 mermaid 插件 |
+| `deploy/` | hexo 定制化：`site.yq` / `next.yq` 表达式 + 两个入口脚本 + `hexo-math-guard` 插件 |
 | `.github/workflows/` | CI：构建与部署 |
 
 ## CI 的构建步骤（`deploy.yml`）
 
 1. `hexo init` 生成临时站点，安装主题与依赖
-2. 安装本站自带的插件（`npm install ./deploy/hexo-mermaid-diagram`）
+2. 安装本站自带的数学保护插件（`npm install ./deploy/hexo-math-guard`）
 3. 用 `deploy/_config.yml_modify.sh` / `_config.next.yml_modify.sh` 套定制化配置
 4. 复制 `markdown/` 与 `deploy/CNAME` 进站点，编译 wasm 小工具到 `source/js/`
 5. `hexo clean && hexo deploy --generate`
@@ -31,37 +31,50 @@
 | --- | --- | --- |
 | Markdown 渲染 | `hexo-renderer-markdown-it`（纯 JS，无外部二进制） | 否 |
 | 脚注 `[^1]` | `markdown-it-footnote` | 否 |
-| 数学公式 | NexT 自带的 MathJax（前端渲染） | 否 |
-| Mermaid | 本站的 `deploy/hexo-mermaid-diagram` 插件 | 否 |
+| 数学公式 | NexT 自带的 MathJax + 本站的 `hexo-math-guard` 插件 | 否 |
+| Mermaid | **NexT 官方方案**：`highlight.exclude_languages` 一行配置 | 否 |
 
 **不使用任何补丁** —— 不修改 `node_modules` 里的第三方文件，不注入自定义 JS，
 不改主题文件。全部通过「换插件 + 改配置」达成。
 
-## Mermaid：为什么自建了一个插件
+## Mermaid：一行配置，零插件
 
-NexT 自带的 mermaid 加载器用
+NexT 自带 mermaid 加载器（`js/third-party/tags/mermaid.js`），它用
 
 ```js
 document.querySelectorAll('pre > .mermaid')
 ```
 
-找元素，要求 `.mermaid` 是 `<pre>` 的**子元素**。而社区常用的
-`hexo-filter-mermaid-diagrams` 输出的是 `<pre class="mermaid">`（class 在 `<pre>` 上），
-选择器命中不到 ⇒ mermaid 库根本不会加载 ⇒ 流程图只显示一段纯文本。
+找元素，要求 `.mermaid` 是 `<pre>` 的**子元素**。
 
-**与其给它打补丁，不如换一个输出结构正确的插件。**
-`deploy/hexo-mermaid-diagram` 是本站自带的插件，输出：
+默认情况下 Hexo 会把代码块交给 highlight.js，产出带 `<figure><table>` 的结构，
+选择器命中不到 ⇒ mermaid 库不会加载 ⇒ 流程图只显示一段纯文本。
 
-```html
-<pre><code class="mermaid">flowchart TD …</code></pre>
+**官方解法是让 Hexo 别去高亮 mermaid**（见 `deploy/site.yq`）：
+
+```yaml
+highlight:
+  exclude_languages:
+    - mermaid
 ```
 
-正好命中主题的选择器，于是**主题自带的加载器直接就能渲染**。
-它是个标准的 Hexo 插件（`package.json` + `before_post_render` 过滤器），
-CI 里用 `npm install ./deploy/hexo-mermaid-diagram` 安装，不是补丁。
+这样 Hexo 只做最外层包裹，产出：
 
-> 内容必须是**纯文本**：mermaid 在元素含子元素时读 `innerHTML`、否则读
-> `textContent`；`<code>` 里只有文本，走后者，解析正确。
+```html
+<pre><code class="highlight mermaid">flowchart TD …</code></pre>
+```
+
+`.mermaid` 正在 `<pre>` 之下，**命中主题选择器，主题自带的 mermaid.js 直接渲染**。
+不需要安装任何 mermaid 插件，也不需要自定义前端 JS。
+
+> 来源：[NexT Issue #881](https://github.com/next-theme/hexo-theme-next/issues/881)
+> 主题维护者指出应删掉 `hexo-filter-mermaid-diagrams`，并由社区补充了
+> `exclude_languages` 这一行。同款讨论见
+> [Issue #842](https://github.com/next-theme/hexo-theme-next/issues/842)。
+>
+> 注意：社区常见的 `hexo-filter-mermaid-diagrams` 反而会**破坏**渲染 ——
+> 它抢先输出 `<pre class="mermaid">`（class 加在 `<pre>` 上），主题选择器命中不到，
+> 而 Hexo 也不会再处理它。**不要安装该插件。**
 
 正文照常写标准围栏，常规 Markdown 工具（Typora、VS Code、GitHub）都能预览：
 
@@ -74,7 +87,7 @@ flowchart TD
 
 ## 数学公式：主题自带的 MathJax
 
-只需要配置（见 `deploy/_config.next.yml_modify.sh`）：
+只需要配置（见 `deploy/next.yq`）：
 
 ```yaml
 math:
@@ -95,10 +108,14 @@ math:
 $$ \sum^{n}<em>{i=1}{v</em>{i} x_i} $$     ← $ 配对错乱，整块公式退化成纯文本
 ```
 
-实测这会波及全站 25 处公式。解决办法是插件里的 `lib/math-guard.js`：
+实测这会波及全站若干处公式。解决办法是本站的 `deploy/hexo-math-guard` 插件：
 它在 markdown-it 的 `emphasis` 规则**之前**把 `$…$` / `$$…$$` 区间整体吃掉、
 转成一个纯文本 token，于是 `_` 不再参与标记解析，公式原样留给 MathJax，
 而 `*斜体*` 与 `**粗体**` 完全不受影响。
+
+挂载方式是 `markdown-it:renderer` 过滤器 —— `hexo-renderer-markdown-it`
+在构造函数末尾会触发它并把 parser 传出来，正好可以 `md.use()` 挂插件，
+**不需要修改或补丁该渲染器**，也不需要任何前端 JS。
 
 > **不要试图用 `markdown.disable_rules: ["emphasis"]` 解决这个问题。**
 > markdown-it 的 `emphasis` 是**核心规则**，同时负责 `*`、`_`、`**`、`__`，
